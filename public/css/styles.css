@@ -1,0 +1,14 @@
+header {
+  background-color: darkslateblue;
+  height: 7.5vh;
+  width: 100%;
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo i
