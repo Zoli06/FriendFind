@@ -1,28 +1,40 @@
 'use strict';
 
-var messageBox;
-var chatMessages;
-$(document).ready(function() {
+var messageBox,
+  chatMessages,
+  roomName,
+  userList;
+$(document).ready(function () {
   messageBox = document.getElementById('message');
   chatMessages = document.getElementById('chat-messages');
+  roomName = document.getElementById('room-name');
+  userList = document.getElementById('user-list');
+});
+
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
 });
 
 const socket = io();
 
+socket.emit('joinRoom', { username, room });
+
+socket.on('roomUsers', ({ room, users }) => {
+  outputRoomName(room);
+  outputUsers(users);
+});
+
 socket.on('inputMessage', message => {
-  console.log(message);
   inputMessage(message);
   scrollAndClearMsg();
 });
 
 socket.on('yourMessage', message => {
-  console.log(message);
   outputMessage(message);
   scrollAndClearMsg();
 });
 
 socket.on('globalMessage', message => {
-  console.log(message);
   globalMessage(message);
   scrollAndClearMsg();
 });
@@ -47,7 +59,7 @@ function inputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
   var currentTime = Date.now();
-  div.innerHTML = '<p class="meta">Me <span>' + getTime(true) + '</span></p><p class="message-text">' + message + '</p>';
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
   chatMessages.appendChild(div);
 }
 
@@ -69,9 +81,9 @@ function getTime(format) {
   if (minutes < 10) {
     minutes = '0' + minutes;
   }
-  if(format == true) { //12h
+  if (format == true) { //12h
     var part = 'am';
-    if(hours > 12) {
+    if (hours > 12) {
       hours -= 12;
       part = 'pm'
     }
@@ -89,3 +101,16 @@ function scrollAndClearMsg() {
   messageBox.value = '';
   messageBox.focus();
 }
+
+function outputRoomName(room) {
+  roomName.innerText = room;
+}
+
+function outputUsers(users) {
+  userList.innerHTML = '';
+  users.forEach(user=>{
+    const li = document.createElement('li');
+    li.innerText = user.username;
+    userList.appendChild(li);
+  });
+ }

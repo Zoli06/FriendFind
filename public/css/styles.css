@@ -78,7 +78,6 @@ nav i {
   text-align: center;
   float: left;
   width: 100%;
-  margin-top: 2.5vw;
 }
 
 .incoming-message {
@@ -103,4 +102,10 @@ nav i {
 .meta span {
   font-weight: bold;
   color: gray;
+}
+
+h1 {
+  font-size: large;
+  text-align: center;
+  font-weight: bold;
 }

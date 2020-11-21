@@ -28,7 +28,12 @@
   </header>
   <section>
     <article class="list">
-
+      <h1>Room: </h1>
+      <h1 id="room-name"></h1>
+      <br />
+      <h1>Users</h1>
+      <ul id="user-list">
+      </ul>
     </article>
     <article class="chat">
       <div class="chat-messages" id="chat-messages">
@@ -49,7 +54,6 @@
         </div>-->
       </div>
       <div class="chat-input">
-        <input type="text" placeholder="Name" class="name" id="name" />
         <input type="text" placeholder="Message" class="message" id="message" />
         <button id="send" onclick="submitMessage(this)">Send</button>
       </div>
