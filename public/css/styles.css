@@ -1,9 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --header-height: 7.5vh;
+  --identity-color: darkslateblue
 }
 
 header {
-  background-color: darkslateblue;
+  background-color: var(--identity-color);
   height: var(--header-height);
   padding: 0 5vw;
 }
@@ -32,7 +37,7 @@ nav i {
 }
 
 .list {
-  width: 25%;
+  width: 30%;
   background-color: lightgreen;
 }
 
@@ -40,6 +45,62 @@ nav i {
   position: relative;
   float: right;
   margin-top: calc((100vh - var(--header-height)) * -1);
-  width: 75%;
+  width: 70%;
   background-color: lightblue;
+  padding-left: 2.5vw;
+}
+
+.chat-messages {
+  overflow-y: auto;
+  max-height: 85%;
+}
+
+.chat-input {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  height: 15%;
+  bottom: 0px;
+  padding: 2vw;
+  margin-left: -2.5vw;
+}
+
+.conversation {
+  padding: 7.5px;
+  border-radius: 7.5px;
+  width: 75%;
+  margin-bottom: 2vh;
+  display: block;
+}
+
+.global-message {
+  margin-bottom: 1vh;
+  text-align: center;
+  float: left;
+  width: 100%;
+  margin-top: 2.5vw;
+}
+
+.incoming-message {
+  background-color: white;
+  float: left;
+}
+
+.outgoing-message {
+  background-color: var(--identity-color);
+  filter: brightness(200%);
+  position: relative;
+  float: right; 
+  color: black;
+  margin-right: 2.5vw;
+}
+
+.meta {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.meta span {
+  font-weight: bold;
+  color: gray;
 }
