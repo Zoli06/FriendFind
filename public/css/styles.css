@@ -1,14 +1,45 @@
+:root {
+  --header-height: 7.5vh;
+}
+
 header {
   background-color: darkslateblue;
-  height: 7.5vh;
-  width: 100%;
+  height: var(--header-height);
+  padding: 0 5vw;
 }
 
 .logo {
   height: 100%;
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
+  justify-content: left;
   align-items: center;
 }
 
-.logo i
+nav {
+  float: right;
+  height: 100%;
+  display: inline-flex;
+  justify-content: left;
+  align-items: center;
+}
+
+nav i {
+  margin-left: 2.5vw
+}
+
+.list, .chat {
+  height: calc(100vh - var(--header-height));
+}
+
+.list {
+  width: 25%;
+  background-color: lightgreen;
+}
+
+.chat {
+  position: relative;
+  float: right;
+  margin-top: calc((100vh - var(--header-height)) * -1);
+  width: 75%;
+  background-color: lightblue;
+}
