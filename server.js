@@ -5,7 +5,8 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
+const { userJoin, getCurrentUser, userLeave, getRoomUsers, getAllUsers } = require('./utils/users');
+const { getRooms } = require('./utils/rooms');
 
 const app = express();
 const server = http.createServer(app);
@@ -14,6 +15,7 @@ const io = socketio(server);
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
+
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
@@ -30,9 +32,9 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
 
-    if(user) {
+    if (user) {
       socket.broadcast.to(user.room).emit('globalMessage', user.username + ' has disconnected!');
-    
+
       io.to(user.room).emit('roomUsers', {
         room: user.room,
         users: getRoomUsers(user.room)
@@ -45,6 +47,7 @@ io.on('connection', socket => {
 
     socket.emit('yourMessage', message);
     socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
+
   });
 });
 
