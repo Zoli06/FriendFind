@@ -4,10 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"
+    integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w=="
+    crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/jquery/jquery-3.5.1.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/index.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link rel="stylesheet" href="css/reset.css">
@@ -16,52 +18,26 @@
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <i class="far fa-comments"></i>
-    </div>
-    <nav>
-      <i class="far fa-comments"></i>
-      <i class="fas fa-globe"></i>
-      <i class="fas fa-plus last"></i>
-    </nav>
-  </header>
-  <section>
-    <article class="list">
-      <h1>Room: </h1>
-      <h1 id="room-name"></h1>
-      <br />
-      <h1>Users</h1>
-      <ul id="user-list">
-      </ul>
-    </article>
-    <article class="chat">
-      <div class="chat-messages" id="chat-messages">
-        <!--<div class="global-message">
-          <p>Room started</p>
-        </div>
-        <div class="conversation incoming-message">
-          <p class="meta">Joe <span>10:52pm</span></p>
-          <p class="message-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate diam non condimentum blandit.
-          </p>
-        </div>
-        <div class="conversation outgoing-message">
-          <p class="meta">Me <span>10:52pm</span></p>
-          <p class="message-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate diam non condimentum blandit.
-          </p>
-        </div>-->
-      </div>
-      <div class="chat-input">
-        <input type="text" placeholder="Message" class="message" id="message" />
-        <button id="send" onclick="submitMessage(this)">Send</button>
-      </div>
-    </article>
-  </section>
-  <footer>
+  <form action="chat.html" onsubmit="return validate()">
+    <h1>Welcome to FriendFind!</h1>
+    <h3>This is the first beta version, there is no design, only some of the functions</h3>
+    <br />
+    <label for="username">Username:</label>
+    <input type="text" name="username" placeholder="Enter username..." required="required">
+    <button type="confirm">Join</button>
+    <br />
+    <input type="radio" name="method" value="join" id="join" required="required" checked="checked" onchange="radioChange(true)">
+    <label for="join">Join a room: </label><br />
+    <label for="room">Room:</label>
+    <select name="room" id="room-list" required="required"></select>
+    
+    <br /> 
 
-  </footer>
+    <input type="radio" name="method" value="create" id="create" onchange="radioChange(false)">
+    <label for="create">Or create one: </label><br />
+    <label for="room">Room:</label>
+    <input type="text" name="room" id="new-room"></input>
+  </form>
 </body>
 
 </html>

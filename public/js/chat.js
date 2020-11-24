@@ -71,6 +71,7 @@ function globalMessage(message) {
   chatMessages.appendChild(div);
 }
 
+/*
 function getTime(format) {
   var currentTime = new Date();
   var hours = currentTime.getHours();
@@ -95,6 +96,7 @@ function getTime(format) {
     return hours + ':' + minutes;
   }
 }
+*/
 
 function scrollAndClearMsg() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -113,4 +115,4 @@ function outputUsers(users) {
     li.innerText = user.username;
     userList.appendChild(li);
   });
- }
+}

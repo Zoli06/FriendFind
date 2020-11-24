@@ -5,7 +5,13 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { userJoin, getCurrentUser, userLeave, getRoomUsers, getAllUsers } = require('./utils/users');
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+  getAllUsers 
+} = require('./utils/users');
 const { getRooms } = require('./utils/rooms');
 
 const app = express();
@@ -15,6 +21,8 @@ const io = socketio(server);
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
+
+  io.emit('rooms', getRooms(getAllUsers()));
 
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
@@ -27,6 +35,8 @@ io.on('connection', socket => {
       room: user.room,
       users: getRoomUsers(user.room)
     });
+
+    io.emit('rooms', getRooms(getAllUsers()));
   });
 
   socket.on('disconnect', () => {
@@ -40,6 +50,8 @@ io.on('connection', socket => {
         users: getRoomUsers(user.room)
       });
     }
+
+    io.emit('rooms', getRooms(getAllUsers()));
   });
 
   socket.on('chatMessage', message => {
@@ -49,6 +61,7 @@ io.on('connection', socket => {
     socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
 
   });
+
 });
 
 const PORT = 4000 || process.env.PORT;
