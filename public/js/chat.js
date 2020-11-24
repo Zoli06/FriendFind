@@ -50,15 +50,13 @@ function submitMessage(caller) {
 function outputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
-  var currentTime = Date.now();
-  div.innerHTML = '<p class="meta">Me <span>' + getTime(true) + '</span></p><p class="message-text">' + message + '</p>';
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
   chatMessages.appendChild(div);
 }
 
 function inputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
-  var currentTime = Date.now();
   div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
   chatMessages.appendChild(div);
 }
@@ -66,7 +64,6 @@ function inputMessage(message) {
 function globalMessage(message) {
   var div = document.createElement('div');
   div.classList.add('global-message');
-  var currentTime = Date.now();
   div.innerHTML = '<p>' + message + '</p>';
   chatMessages.appendChild(div);
 }
