@@ -26,17 +26,18 @@ socket.on('roomUsers', ({ room, users }) => {
 
 socket.on('inputMessage', message => {
   inputMessage(message);
-  scrollAndClearMsg();
+  scroll();
 });
 
 socket.on('yourMessage', message => {
   outputMessage(message);
-  scrollAndClearMsg();
+  scroll();
+  clearMsg();
 });
 
 socket.on('globalMessage', message => {
   globalMessage(message);
-  scrollAndClearMsg();
+  scroll();
 });
 
 function submitMessage(caller) {
@@ -95,8 +96,11 @@ function getTime(format) {
 }
 */
 
-function scrollAndClearMsg() {
+function scroll() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function clearMsg() {
   messageBox.value = '';
   messageBox.focus();
 }
