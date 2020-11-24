@@ -31,6 +31,7 @@ socket.on('inputMessage', message => {
 
 socket.on('yourMessage', message => {
   outputMessage(message);
+  console.log(message);
   scroll();
   clearMsg();
 });
@@ -112,8 +113,22 @@ function outputRoomName(room) {
 function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach(user=>{
+    const div = document.createElement('div');
     const li = document.createElement('li');
+    const i = document.createElement('i');
+    li.classList.add('user');
+    i.classList.add('fas', 'fa-envelope', 'private');
+    i.addEventListener("click", function() {
+      sendPrivate(this);
+    });
     li.innerText = user.username;
-    userList.appendChild(li);
+    div.appendChild(li);
+    div.appendChild(i);
+    userList.appendChild(div);
   });
+}
+
+function sendPrivate(caller) {
+  const targetName = caller.parentNode.firstChild.innerText;
+  socket.emit('sendPrivate', targetName);
 }

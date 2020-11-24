@@ -113,3 +113,12 @@ h1 {
 .button:hover {
   cursor: pointer;
 }
+
+.user {
+  display: inline-block;
+  margin-right: 1.5vw;
+}
+
+.private:hover {
+  cursor: pointer;
+}

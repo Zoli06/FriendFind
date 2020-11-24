@@ -10,6 +10,10 @@ function getCurrentUser(id) {
   return users.find(user => user.id === id);
 }
 
+function getCurrentUserByName(username) {
+  return users.find(user => user.username === username);
+}
+
 function userLeave(id) {
   const index = users.findIndex(user => user.id === id);
 
@@ -26,20 +30,11 @@ function getAllUsers() {
   return users;
 }
 
-function getAllRooms() {
-  const rooms = [];
-  var roomsWithoutDuplicate = [];
-  for (var i=0; i != users.length; i++) {
-    rooms.push(users[i].room);
-  }
-  roomsWithoutDuplicate = Array.from(new Set(rooms));
-  return roomsWithoutDuplicate;
-}
-
 module.exports = {
   userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers,
-  getAllUsers
+  getAllUsers,
+  getCurrentUserByName
 }

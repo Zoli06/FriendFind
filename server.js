@@ -4,15 +4,19 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-const formatMessage = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers,
-  getAllUsers 
+  getAllUsers,
+  getCurrentUserByName
 } = require('./utils/users');
-const { getRooms } = require('./utils/rooms');
+const {
+  getRooms,
+  generateRandomRoom
+} = require('./utils/rooms');
+const formatMessage = require('./utils/messages');
 
 const app = express();
 const server = http.createServer(app);
@@ -59,8 +63,15 @@ io.on('connection', socket => {
 
     socket.emit('yourMessage', formatMessage(user.username, message));
     socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
-
   });
+
+  socket.on('sendPrivate', targetName => { //error
+    const user = getCurrentUser(socket.id);
+    const target = getCurrentUserByName(targetName);
+
+    socket.emit('yourMessage', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', 'http://localhost:4000/chat.html?room=' + generateRandomRoom()));
+    io.to(target.id).emit('inputMessage', formatMessage(user.username, target.username + ' invited you to a private room.', 'http://localhost:4000/chat.html?room=' + generateRandomRoom()));
+  })
 
 });
 
