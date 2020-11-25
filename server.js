@@ -65,12 +65,17 @@ io.on('connection', socket => {
     socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
   });
 
-  socket.on('sendPrivate', targetName => { //error
+  socket.on('sendPrivate', targetName => {
     const user = getCurrentUser(socket.id);
     const target = getCurrentUserByName(targetName);
+    const url = 'http://localhost:4000/chat.html?room=priv-' + generateRandomRoom();
 
-    socket.emit('yourMessage', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', 'http://localhost:4000/chat.html?room=' + generateRandomRoom()));
-    io.to(target.id).emit('inputMessage', formatMessage(user.username, target.username + ' invited you to a private room.', 'http://localhost:4000/chat.html?room=' + generateRandomRoom()));
+    if (target.id == user.id) {
+      socket.emit('alert', 'You can\'t invite yourself!');
+    } else {
+      socket.emit('yourInvite', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', url));
+      io.to(target.id).emit('inputMessage', formatMessage(user.username, user.username + ' invited you to a private room.', url));
+    }
   })
 
 });

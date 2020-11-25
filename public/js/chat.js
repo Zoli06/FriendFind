@@ -31,7 +31,6 @@ socket.on('inputMessage', message => {
 
 socket.on('yourMessage', message => {
   outputMessage(message);
-  console.log(message);
   scroll();
   clearMsg();
 });
@@ -39,6 +38,16 @@ socket.on('yourMessage', message => {
 socket.on('globalMessage', message => {
   globalMessage(message);
   scroll();
+});
+
+socket.on('yourInvite', message => {
+  outputInvite(message);
+  scroll();
+  clearMsg();
+});
+
+socket.on('alert', message => {
+  alert(message);
 });
 
 function submitMessage(caller) {
@@ -56,10 +65,17 @@ function outputMessage(message) {
   chatMessages.appendChild(div);
 }
 
+function outputInvite(message) {
+  var div = document.createElement('div');
+  div.classList.add('outgoing-message', 'conversation');
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
+  chatMessages.appendChild(div);
+}
+
 function inputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
-  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
   chatMessages.appendChild(div);
 }
 
@@ -107,7 +123,11 @@ function clearMsg() {
 }
 
 function outputRoomName(room) {
-  roomName.innerText = room;
+  if (room.slice(0, 5) != 'priv-') {
+    roomName.innerText = room;
+  } else {
+    roomName.innerText = 'private room'
+  }
 }
 
 function outputUsers(users) {

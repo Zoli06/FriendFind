@@ -1,8 +1,10 @@
 function getRooms(users) {
   const rooms = [];
   var roomsWithoutDuplicate = [];
-  for (var i=0; i != users.length; i++) {
-    rooms.push(users[i].room);
+  for (var i = 0; i != users.length; i++) {
+    if (users[i].room.slice(0, 5) != 'priv-') {
+      rooms.push(users[i].room);
+    }
   }
   roomsWithoutDuplicate = Array.from(new Set(rooms));
   return roomsWithoutDuplicate;
