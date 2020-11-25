@@ -29,6 +29,11 @@ socket.on('inputMessage', message => {
   scroll();
 });
 
+socket.on('inputInvite', message => {
+  inputInvite(message);
+  scroll();
+});
+
 socket.on('yourMessage', message => {
   outputMessage(message);
   scroll();
@@ -65,6 +70,13 @@ function outputMessage(message) {
   chatMessages.appendChild(div);
 }
 
+function inputMessage(message) {
+  var div = document.createElement('div');
+  div.classList.add('incoming-message', 'conversation');
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
+  chatMessages.appendChild(div);
+}
+
 function outputInvite(message) {
   var div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
@@ -72,10 +84,10 @@ function outputInvite(message) {
   chatMessages.appendChild(div);
 }
 
-function inputMessage(message) {
+function inputInvite(message) {
   var div = document.createElement('div');
-  div.classList.add('incoming-message', 'conversation');
-  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
+  div.classList.add('outgoing-message', 'conversation');
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
   chatMessages.appendChild(div);
 }
 

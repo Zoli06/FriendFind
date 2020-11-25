@@ -74,7 +74,7 @@ io.on('connection', socket => {
       socket.emit('alert', 'You can\'t invite yourself!');
     } else {
       socket.emit('yourInvite', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', url));
-      io.to(target.id).emit('inputMessage', formatMessage(user.username, user.username + ' invited you to a private room.', url));
+      io.to(target.id).emit('inputInvite', formatMessage(user.username, user.username + ' invited you to a private room.', url));
     }
   })
 
