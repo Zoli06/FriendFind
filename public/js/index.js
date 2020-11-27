@@ -20,7 +20,6 @@ const allRooms = [];
 const socket = io();
 
 socket.on('rooms', message => {
-  console.log('refresh')
   outputRooms(message);
 })
 
@@ -32,11 +31,9 @@ function outputRooms(rooms) {
     allRooms.push(room);
     roomList.appendChild(option);
   });
-  console.log(rooms);
 }
 
 function radioChange(isItJoin, isPrivate) {
-  console.log('changed');
   if (isItJoin == true && isPrivate == false) {
     $('#room-list').prop('required', true).prop('checked', true).prop('disabled', false);
     $('#new-room, #createjoin-priv-room').prop('required', false).prop('disabled', true);
@@ -59,7 +56,6 @@ function validate() {
 
 function setRadioStatus() {
   if ($('#createjoin-priv').prop('checked')) {
-    console.log('ok');
     radioChange(false, true);
   } else if ($('create').prop('checked')) {
     radioChange(false, false);
