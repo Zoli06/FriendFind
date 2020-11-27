@@ -1,5 +1,7 @@
 'use strict';
 
+if (window.location.href.includes('method=createjoin-priv') && !window.location.href.includes('room=priv-')) window.location.href = window.location.href.replace('room=', 'room=priv-')
+
 var messageBox,
   chatMessages,
   roomName,
@@ -11,13 +13,21 @@ $(document).ready(function () {
   userList = document.getElementById('user-list');
 });
 
-const { username, room } = Qs.parse(location.search, {
+var isPrivate = false
+
+var { username, method, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
+if (method == 'createjoin-priv') {
+  isPrivate = true;
+} else {
+  isPrivate = false;
+}
+
 const socket = io();
 
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', { username, room, isPrivate });
 
 socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);
@@ -49,6 +59,10 @@ socket.on('yourInvite', message => {
   outputInvite(message);
   scroll();
   clearMsg();
+});
+
+socket.on('redirect', function (destination) {
+  window.location.href = destination;
 });
 
 socket.on('alert', message => {
@@ -138,19 +152,19 @@ function outputRoomName(room) {
   if (room.slice(0, 5) != 'priv-') {
     roomName.innerText = room;
   } else {
-    roomName.innerText = 'private room'
+    roomName.innerText = room.substring(5) + ' (private room)';
   }
 }
 
 function outputUsers(users) {
   userList.innerHTML = '';
-  users.forEach(user=>{
+  users.forEach(user => {
     const div = document.createElement('div');
     const li = document.createElement('li');
     const i = document.createElement('i');
     li.classList.add('user');
     i.classList.add('fas', 'fa-envelope', 'private');
-    i.addEventListener("click", function() {
+    i.addEventListener("click", function () {
       sendPrivate(this);
     });
     li.innerText = user.username;

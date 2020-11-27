@@ -30,3 +30,40 @@ module.exports = {
   getRooms,
   generateRandomRoom
 }
+
+/*
+const allRooms = [];
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
+function getRooms(users) {
+  const rooms = [];
+  var roomsWithoutDuplicate = [];
+  for (var i = 0; i != users.length; i++) {
+    //if (users[i].room.slice(0, 5) != 'priv-') {
+    rooms.push(users[i].room);
+    //}
+
+  }
+  roomsWithoutDuplicate = Array.from(new Set(rooms));
+  for (var i = 0; i != allRooms.length; i++) {
+    if (!roomsWithoutDuplicate.includes(allRooms[i].room)) {
+      allRooms.slice(i);
+    }
+    console.log('removed');
+  }
+  for (var i = 0; i != rooms.length; i++) {
+    if (!allRooms.includes(roomsWithoutDuplicate[i])) {
+      allRooms.push({ room: roomsWithoutDuplicate[i], private: false });
+    }
+    console.log('pushed');
+  }
+  console.log(roomsWithoutDuplicate, allRooms)
+  return roomsWithoutDuplicate;
+}
+*/

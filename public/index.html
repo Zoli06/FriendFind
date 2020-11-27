@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -17,26 +17,36 @@
   <title>FriendFind</title>
 </head>
 
-<body>
+<body onload="radioChange(true, false)">
   <form action="chat.html" onsubmit="return validate()">
     <h1>Welcome to FriendFind!</h1>
     <h3>This is the first beta version, there is no design, only some of the functions</h3>
     <br />
-    <label for="username">Username:</label>
-    <input type="text" name="username" placeholder="Enter username..." required="required">
-    <button type="confirm">Join</button>
+    <label>Username:</label>
+    <input type="text" name="username" placeholder="Enter username..." required="required" />
+    <input type="submit" />
     <br />
-    <input type="radio" name="method" value="join" id="join" required="required" checked="checked" onchange="radioChange(true)">
+    <input type="radio" name="method" value="join" id="join" required="required" checked="checked"
+      onchange="radioChange(true, false)" />
     <label for="join">Join a room: </label><br />
-    <label for="room">Room:</label>
-    <select name="room" id="room-list" required="required"></select>
-    
-    <br /> 
+    <label>Room:</label>
+    <select name="room" id="room-list" required="required">
+      <option selected="selected" disabled="disabled" label="default"></option>
+    </select>
 
-    <input type="radio" name="method" value="create" id="create" onchange="radioChange(false)">
+    <br />
+
+    <input type="radio" name="method" value="create" id="create" onchange="radioChange(false, false)" />
     <label for="create">Or create one: </label><br />
-    <label for="room">Room:</label>
-    <input type="text" name="room" id="new-room"></input>
+    <label>Room:</label>
+    <input type="text" name="room" id="new-room" />
+
+    <br />
+
+    <input type="radio" name="method" value="createjoin-priv" id="createjoin-priv" onchange="radioChange(false, true)" />
+    <label for="create/join-priv">Or create a private one: </label><br />
+    <label>Room:</label>
+    <input type="text" name="room" id="createjoin-priv-room" />
   </form>
 </body>
 

@@ -1,10 +1,17 @@
 'use strict';
 
 var roomList;
-$(document).ready(function() {
+$(document).ready(function () {
   roomList = document.getElementById('room-list');
-  radioChange(true);
 });
+
+const alertMessage = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+
+if (alertMessage['alert'] != 0 && alertMessage['alert'] != undefined && alertMessage['alert'] != null) {
+  alert(alertMessage['alert']);
+}
 
 const allRooms = [];
 
@@ -17,7 +24,7 @@ socket.on('rooms', message => {
 
 function outputRooms(rooms) {
   roomList.innerHTML = '';
-  rooms.forEach(room=>{
+  rooms.forEach(room => {
     const option = document.createElement('option');
     option.innerText = room;
     allRooms.push(room);
@@ -26,21 +33,22 @@ function outputRooms(rooms) {
   console.log(rooms);
 }
 
-function radioChange(isItJoin) {
+function radioChange(isItJoin, isPrivate) {
   console.log('changed');
-  if(isItJoin == true) {
-      $('#room-list').prop('required',true).prop('checked', true).prop('disabled', false);
-      $('#new-room').prop('required',false).prop('disabled', false).prop('disabled', true);
-      console.log('checked');
-  } else {
-      $('#room-list').prop('required',false).prop('disabled', false).prop('disabled', true);
-      $('#new-room').prop('required',true).prop('disabled', true).prop('disabled', false);
-      console.log('unchecked');
+  if (isItJoin == true && isPrivate == false) {
+    $('#room-list').prop('required', true).prop('checked', true).prop('disabled', false);
+    $('#new-room, #createjoin-priv-room').prop('required', false).prop('disabled', true);
+  } else if (isItJoin == false && isPrivate == false) {
+    $('#room-list, #createjoin-priv-room').prop('required', false).prop('disabled', false).prop('disabled', true);
+    $('#new-room').prop('required', true).prop('disabled', false);
+  } else if (isItJoin == false && isPrivate == true) {
+    $('#room-list, #new-room').prop('required', false).prop('disabled', true).prop('disabled', true);
+    $('#createjoin-priv-room').prop('required', true).prop('disabled', false);
   }
 }
 
 function validate() {
-  if($('#create').prop('checked') == true && allRooms.includes($('#new-room').val())) {
+  if ($('#create').prop('checked') == true && allRooms.includes($('#new-room').val())) {
     alert('Sorry, but a room with this name already exists');
     return false;
   }

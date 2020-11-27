@@ -28,8 +28,15 @@ io.on('connection', socket => {
 
   io.emit('rooms', getRooms(getAllUsers()));
 
-  socket.on('joinRoom', ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+  socket.on('joinRoom', ({ username, room, isPrivate }) => {
+    if ( room.slice(0, 5) != 'priv-'  && isPrivate ) {
+      socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
+      return;
+    } else if ( room.slice(0, 5) == 'priv-'  && !isPrivate ) {
+      socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
+      return;
+    }
+    const user = userJoin(socket.id, username, room, isPrivate);
     socket.join(user.room);
 
     socket.emit('globalMessage', 'You connected as ' + user.username);
@@ -68,7 +75,7 @@ io.on('connection', socket => {
   socket.on('sendPrivate', targetName => {
     const user = getCurrentUser(socket.id);
     const target = getCurrentUserByName(targetName);
-    const url = 'http://localhost:4000/chat.html?room=priv-' + generateRandomRoom();
+    const url = 'http://localhost:4000/chat.html?method=createjoin-priv&room=priv-' + generateRandomRoom();
 
     if (target.id == user.id) {
       socket.emit('alert', 'You can\'t invite yourself!');
