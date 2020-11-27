@@ -28,14 +28,23 @@ io.on('connection', socket => {
 
   io.emit('rooms', getRooms(getAllUsers()));
 
-  socket.on('joinRoom', ({ username, room, isPrivate }) => {
-    if ( room.slice(0, 5) != 'priv-'  && isPrivate ) {
-      socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
-      return;
-    } else if ( room.slice(0, 5) == 'priv-'  && !isPrivate ) {
+  socket.on('joinRoom', ({ username, room, isPrivate, method }) => {
+    //Validate
+    if ((room.slice(0, 5) != 'priv-'  && isPrivate) || (room.slice(0, 5) == 'priv-'  && !isPrivate) || username == '' || room == '' || (isPrivate != false && isPrivate != true) || method == '') {
       socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
       return;
     }
+
+    //Check for equal usernames
+    var roomUsersUsernames = [];
+    for (var i = 0; i != getRoomUsers(room).length; i++) {
+      roomUsersUsernames.push(getRoomUsers(room)[i].username)
+    }
+    if (roomUsersUsernames.includes(username)) {
+      socket.emit('redirect', '/?alert=Error! This username is already taken in this room');
+      return;
+    }
+
     const user = userJoin(socket.id, username, room, isPrivate);
     socket.join(user.room);
 

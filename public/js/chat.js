@@ -13,7 +13,7 @@ $(document).ready(function () {
   userList = document.getElementById('user-list');
 });
 
-var isPrivate = false
+var isPrivate = false;
 
 var { username, method, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
@@ -27,7 +27,7 @@ if (method == 'createjoin-priv') {
 
 const socket = io();
 
-socket.emit('joinRoom', { username, room, isPrivate });
+socket.emit('joinRoom', { username, room, isPrivate, method });
 
 socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);

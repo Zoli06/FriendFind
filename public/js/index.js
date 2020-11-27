@@ -11,6 +11,7 @@ const alertMessage = Qs.parse(location.search, {
 
 if (alertMessage['alert'] != 0 && alertMessage['alert'] != undefined && alertMessage['alert'] != null) {
   alert(alertMessage['alert']);
+  window.location.href = '/';
 }
 
 const allRooms = [];
@@ -54,3 +55,4 @@ function validate() {
   }
   return true;
 }
+
