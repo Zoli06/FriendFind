@@ -17,7 +17,7 @@
   <title>FriendFind</title>
 </head>
 
-<body onload="setRadioStatus()">
+<body>
   <form action="chat.html" onsubmit="return validate()">
     <h1>Welcome to FriendFind!</h1>
     <h3>This is the first beta version, there is no design, only some of the functions</h3>
@@ -26,7 +26,7 @@
     <input type="text" name="username" placeholder="Enter username..." required="required" />
     <input type="submit" />
     <br />
-    <input type="radio" name="method" value="join" id="join" required="required" checked="checked"
+    <input type="radio" name="method" value="join" id="join" required="required" checked="checked" autocomplete="off"
       onchange="radioChange(true, false)" />
     <label for="join">Join a room: </label><br />
     <label>Room:</label>
@@ -36,14 +36,14 @@
 
     <br />
 
-    <input type="radio" name="method" value="create" id="create" onchange="radioChange(false, false)" />
+    <input type="radio" name="method" value="create" id="create" autocomplete="off" onchange="radioChange(false, false)" />
     <label for="create">Or create one: </label><br />
     <label>Room:</label>
     <input type="text" name="room" id="new-room" />
 
     <br />
 
-    <input type="radio" name="method" value="createjoin-priv" id="createjoin-priv" onchange="radioChange(false, true)" />
+    <input type="radio" name="method" value="createjoin-priv" id="createjoin-priv" autocomplete="off" onchange="radioChange(false, true)" />
     <label for="create/join-priv">Or create/join a private one: </label><br />
     <label>Room:</label>
     <input type="text" name="room" id="createjoin-priv-room" />

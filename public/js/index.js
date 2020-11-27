@@ -3,6 +3,7 @@
 var roomList;
 $(document).ready(function () {
   roomList = document.getElementById('room-list');
+  setRadioStatus();
 });
 
 const alertMessage = Qs.parse(location.search, {
@@ -49,10 +50,20 @@ function radioChange(isItJoin, isPrivate) {
 }
 
 function validate() {
-  if ($('#create').prop('checked') == true && allRooms.includes($('#new-room').val())) {
+  if ($('#create').prop('checked') && allRooms.includes($('#new-room').val())) {
     alert('Sorry, but a room with this name already exists');
     return false;
   }
   return true;
 }
 
+function setRadioStatus() {
+  if ($('#createjoin-priv').prop('checked')) {
+    console.log('ok');
+    radioChange(false, true);
+  } else if ($('create').prop('checked')) {
+    radioChange(false, false);
+  } else {
+    radioChange(true, false);
+  }
+}
