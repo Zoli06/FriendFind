@@ -100,8 +100,8 @@ function outputInvite(message) {
 
 function inputInvite(message) {
   var div = document.createElement('div');
-  div.classList.add('outgoing-message', 'conversation');
-  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
+  div.classList.add('incoming-message', 'conversation');
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
   chatMessages.appendChild(div);
 }
 
