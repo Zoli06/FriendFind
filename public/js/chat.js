@@ -184,10 +184,14 @@ function urlify(text) {
   var urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 
   return text.replace(urlRegex, function (url) {
-    if (url.includes('@')) {
+    if (url.search(emailRegex) !== -1) {
       return '<a target="_blank" href="mailto:' + url + '">' + url + '</a>';
     } else {
-      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+      if (url.search('://') == -1) {
+        return '<a target="_blank" href="http://' + url.slice(0, url.search('://')) + '">' + url + '</a>';
+      } else {
+        return '<a target="_blank" href="' + url + '">' + url + '</a>';
+      }
     }
   })
   // or alternatively
