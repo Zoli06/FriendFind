@@ -80,14 +80,14 @@ function submitMessage(caller) {
 function outputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
-  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
   chatMessages.appendChild(div);
 }
 
 function inputMessage(message) {
   var div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
-  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + '</p>';
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
   chatMessages.appendChild(div);
 }
 
@@ -108,7 +108,7 @@ function inputInvite(message) {
 function globalMessage(message) {
   var div = document.createElement('div');
   div.classList.add('global-message');
-  div.innerHTML = '<p>' + message + '</p>';
+  div.innerHTML = '<p>' + urlify(message) + '</p>';
   chatMessages.appendChild(div);
 }
 
@@ -178,3 +178,23 @@ function sendPrivate(caller) {
   const targetName = caller.parentNode.firstChild.innerText;
   socket.emit('sendPrivate', targetName);
 }
+
+function urlify(text) {
+  var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+  var urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+
+  return text.replace(urlRegex, function (url) {
+    if (url.includes('@')) {
+      return '<a target="_blank" href="mailto:' + url + '">' + url + '</a>';
+    } else {
+      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    }
+  })
+  // or alternatively
+  // return text.replace(urlRegex, '<a href="$1">$1</a>')
+}
+
+var text = 'zolixvagyok@gmail.com';
+var html = urlify(text);
+
+console.log(html)

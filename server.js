@@ -48,7 +48,7 @@ io.on('connection', socket => {
     const user = userJoin(socket.id, username, room, isPrivate);
     socket.join(user.room);
 
-    socket.emit('globalMessage', 'You connected as ' + user.username);
+    socket.emit('globalMessage', 'You are connected as ' + user.username);
     socket.broadcast.to(user.room).emit('globalMessage', user.username + ' has joined');
 
     io.to(user.room).emit('roomUsers', {
