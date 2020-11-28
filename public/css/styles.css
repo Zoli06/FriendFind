@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 :root {
@@ -133,4 +134,9 @@ h1 {
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+}
+
+#preview {
+  max-width: 50%;
+  max-height: 80%;
 }

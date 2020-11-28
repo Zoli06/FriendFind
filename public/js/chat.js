@@ -2,7 +2,7 @@
 
 if (window.location.href.includes('method=createjoin-priv') && !window.location.href.includes('room=priv-')) window.location.href = window.location.href.replace('room=', 'room=priv-')
 
-var messageBox,
+let messageBox,
   chatMessages,
   roomName,
   userList;
@@ -13,9 +13,9 @@ $(document).ready(function () {
   userList = document.getElementById('user-list');
 });
 
-var isPrivate = false;
+let isPrivate = false;
 
-var { username, method, room } = Qs.parse(location.search, {
+let { username, method, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
@@ -69,8 +69,47 @@ socket.on('alert', message => {
   alert(message);
 });
 
+function upload(caller) {
+  console.log(caller.files[0]);
+  console.log(URL.createObjectURL(event.target.files[0]));
+  readImage($(caller)).done(function(base64Data){
+    $('#preview').prop('src', base64Data);
+    return base64Data;
+  });
+}
+
+function readImage(inputElement) {
+  let deferred = $.Deferred();
+
+  let files = inputElement.get(0).files;
+  if (files && files[0]) {
+      let fr = new FileReader();
+      fr.onload = function(e) {
+          deferred.resolve(e.target.result);
+      };
+      fr.readAsDataURL( files[0] );
+  } else {
+      deferred.resolve(undefined);
+  }
+
+  return deferred.promise();
+}
+
+function changeFileCheckbox(caller) {
+  if ($(caller).prop('checked')) {
+    $("#file").prop('disabled', false);
+  } else {
+    $("#file").prop('disabled', true);
+  }
+}
+
 function submitMessage(caller) {
   const message = messageBox.value;
+
+  if ($('#file-checkbox').prop('checked')) {
+    console.log(upload($('#file')))
+    socket.emit('chatMessage', upload(document.getElementById('file')));
+  }
 
   socket.emit('chatMessage', message);
 
@@ -78,35 +117,35 @@ function submitMessage(caller) {
 }
 
 function outputMessage(message) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
   div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
   chatMessages.appendChild(div);
 }
 
 function inputMessage(message) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
   div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
   chatMessages.appendChild(div);
 }
 
 function outputInvite(message) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
   div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
   chatMessages.appendChild(div);
 }
 
 function inputInvite(message) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
   div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + message.text + ' <a target="_blank" href="' + message.link + '&username=' + username + '">Join</a></p>';
   chatMessages.appendChild(div);
 }
 
 function globalMessage(message) {
-  var div = document.createElement('div');
+  let div = document.createElement('div');
   div.classList.add('global-message');
   div.innerHTML = '<p>' + urlify(message) + '</p>';
   chatMessages.appendChild(div);
@@ -114,17 +153,17 @@ function globalMessage(message) {
 
 /*
 function getTime(format) {
-  var currentTime = new Date();
-  var hours = currentTime.getHours();
+  let currentTime = new Date();
+  let hours = currentTime.getHours();
   if (hours < 10) {
     hours = '0' + hours;
   }
-  var minutes = currentTime.getMinutes();
+  let minutes = currentTime.getMinutes();
   if (minutes < 10) {
     minutes = '0' + minutes;
   }
   if (format == true) { //12h
-    var part = 'am';
+    let part = 'am';
     if (hours > 12) {
       hours -= 12;
       part = 'pm'
@@ -180,8 +219,8 @@ function sendPrivate(caller) {
 }
 
 function urlify(text) {
-  var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
-  var urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+  let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+  let urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 
   return text.replace(urlRegex, function (url) {
     if (url.search(emailRegex) !== -1) {
@@ -197,8 +236,3 @@ function urlify(text) {
   // or alternatively
   // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
-
-var text = 'zolixvagyok@gmail.com';
-var html = urlify(text);
-
-console.log(html)

@@ -4,7 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"
+    integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w=="
+    crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/jquery/jquery-3.5.1.js"></script>
   <script src="js/chat.js"></script>
@@ -56,6 +58,9 @@
       </div>
       <div class="chat-input">
         <input type="text" placeholder="Message" class="message" id="message" />
+        <input type="checkbox" name="fileCheckbox" onchange="changeFileCheckbox(this)" autocomplete="off" id="file-checkbox" />
+        <input type="file" id="file" disabled="disabled" onchange="upload(this)" />
+        <image id="preview"></image>
         <button id="send" onclick="submitMessage(this)">Send</button>
       </div>
     </article>

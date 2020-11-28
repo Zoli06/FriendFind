@@ -36,8 +36,8 @@ io.on('connection', socket => {
     }
 
     //Check for equal usernames
-    var roomUsersUsernames = [];
-    for (var i = 0; i != getRoomUsers(room).length; i++) {
+    let roomUsersUsernames = [];
+    for (let i = 0; i != getRoomUsers(room).length; i++) {
       roomUsersUsernames.push(getRoomUsers(room)[i].username)
     }
     if (roomUsersUsernames.includes(username)) {

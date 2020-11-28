@@ -1,6 +1,6 @@
 'use strict';
 
-var roomList;
+let roomList;
 $(document).ready(function () {
   roomList = document.getElementById('room-list');
   setRadioStatus();
