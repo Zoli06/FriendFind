@@ -107,24 +107,17 @@ function readImage(inputElement) {
   return deferred.promise();
 }
 
-function changeFileCheckbox(caller) {
-  if ($(caller).prop('checked')) {
-    $("#file").prop('disabled', false);
-  } else {
-    $("#file").prop('disabled', true);
-  }
-}
-
 function submitMessage() {
   const message = messageBox.value;
 
-  console.log();
+  let fileHtmlObj = document.getElementById('file');
 
-  if ($('#file-checkbox').prop('checked')) {
+  console.log(fileHtmlObj.files[0] != undefined)
+
+  if (fileHtmlObj.files[0] != undefined) {
     //most have been copied upload() because of a bug
-    const caller = document.getElementById('file')
     //console.log(URL.createObjectURL(caller.files[0]));
-    readImage($(caller)).done(function (base64Data) {
+    readImage($(fileHtmlObj)).done(function (base64Data) {
       $('#preview').prop('src', base64Data);
       socket.emit('chatMessageWithFile', {
         file: base64Data,
@@ -133,7 +126,7 @@ function submitMessage() {
       );
     });
   } else {
-    socket.emit('chatMessageWithFile', message);
+    socket.emit('chatMessage', message);
   }
 
   return false;
@@ -149,7 +142,7 @@ function outputMessage(message) {
 function outputMessageWithFile(message, file) {
   let div = document.createElement('div');
   div.classList.add('outgoing-message', 'conversation');
-  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.comment) + '</p><img class="message-file" src="' + file + '" />';
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p><img class="message-file" src="' + file + '" />';
   chatMessages.appendChild(div);
 }
 

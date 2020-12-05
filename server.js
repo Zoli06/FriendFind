@@ -84,8 +84,6 @@ io.on('connection', socket => {
   socket.on('chatMessageWithFile', message => {
     const user = getCurrentUser(socket.id);
 
-    console.log(message.file);
-
     socket.emit('yourMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
     socket.broadcast.to(user.room).emit('inputMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
   });
