@@ -30,7 +30,7 @@ io.on('connection', socket => {
 
   socket.on('joinRoom', ({ username, room, isPrivate, method }) => {
     //Validate
-    if ((room.slice(0, 5) != 'priv-'  && isPrivate) || (room.slice(0, 5) == 'priv-'  && !isPrivate) || username == '' || room == '' || (isPrivate != false && isPrivate != true) || method == '') {
+    if ((room.slice(0, 5) != 'priv-' && isPrivate) || (room.slice(0, 5) == 'priv-' && !isPrivate) || username == '' || room == '' || (isPrivate != false && isPrivate != true) || method == '') {
       socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
       return;
     }
@@ -83,9 +83,13 @@ io.on('connection', socket => {
 
   socket.on('chatMessageWithFile', message => {
     const user = getCurrentUser(socket.id);
-
-    socket.emit('yourMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
-    socket.broadcast.to(user.room).emit('inputMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
+    console.log(message.file.slice(0, 11) == 'data:image/');
+    if (message.file.slice(0, 11) != 'data:image/') {
+      socket.emit('alert', 'Unsupported file format! We only accept images.');
+    } else {
+      socket.emit('yourMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
+      socket.broadcast.to(user.room).emit('inputMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
+    }
   });
 
   socket.on('sendPrivate', targetName => {

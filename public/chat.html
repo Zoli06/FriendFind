@@ -58,8 +58,9 @@
       </div>
       <div class="chat-input">
         <input type="text" placeholder="Message" class="message" id="message" />
-        <input type="file" id="file" onchange="upload()" />
+        <input type="file" id="file" onchange="upload()" accept="image/*" />
         <image id="preview"></image>
+        <button id="reset-upload" onclick="resetUpload()">Delete files</button>
         <button id="send" onclick="submitMessage()">Send</button>
       </div>
     </article>

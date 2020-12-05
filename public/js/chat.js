@@ -39,7 +39,7 @@ socket.on('inputMessage', message => {
   scroll();
 });
 
-socket.on('inputMessageWithFile', ({message, file}) => {
+socket.on('inputMessageWithFile', ({ message, file }) => {
   inputMessageWithFile(message, file);
   scroll();
 });
@@ -55,7 +55,7 @@ socket.on('yourMessage', message => {
   clearMsg();
 });
 
-socket.on('yourMessageWithFile', ({message, file}) => {
+socket.on('yourMessageWithFile', ({ message, file }) => {
   console.log(file);
   outputMessageWithFile(message, file);
   scroll();
@@ -85,7 +85,11 @@ function upload() {
   const caller = document.getElementById('file')
   //console.log(URL.createObjectURL(caller.files[0]));
   readImage($(caller)).done(function (base64Data) {
-    $('#preview').prop('src', base64Data);
+    if (base64Data == undefined) {
+      $('#preview').prop('src', '')
+    } else {
+      $('#preview').prop('src', base64Data);
+    }
     return base64Data;
   });
 }
@@ -112,10 +116,8 @@ function submitMessage() {
 
   let fileHtmlObj = document.getElementById('file');
 
-  console.log(fileHtmlObj.files[0] != undefined)
-
   if (fileHtmlObj.files[0] != undefined) {
-    //most have been copied upload() because of a bug
+    //most have been copied from upload() because of a bug
     //console.log(URL.createObjectURL(caller.files[0]));
     readImage($(fileHtmlObj)).done(function (base64Data) {
       $('#preview').prop('src', base64Data);
@@ -124,12 +126,24 @@ function submitMessage() {
         comment: message
       }
       );
+      resetUpload();
     });
   } else {
     socket.emit('chatMessage', message);
   }
 
   return false;
+}
+
+function resetUpload() {
+  let fileHtmlObj = document.getElementById('file');
+  let tempFileHtmlObj = document.createElement('input');
+
+  $(tempFileHtmlObj).prop('type', 'file').prop('id', 'file').prop('accept', 'image/*');
+  fileHtmlObj.remove();
+  $('#preview').prop('src', '');
+  document.getElementById('message').after(tempFileHtmlObj);
+  $(document.getElementById('file')).change(upload);
 }
 
 function outputMessage(message) {
