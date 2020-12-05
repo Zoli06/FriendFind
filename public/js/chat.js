@@ -39,6 +39,11 @@ socket.on('inputMessage', message => {
   scroll();
 });
 
+socket.on('inputMessageWithFile', ({message, file}) => {
+  inputMessageWithFile(message, file);
+  scroll();
+});
+
 socket.on('inputInvite', message => {
   inputInvite(message);
   scroll();
@@ -46,6 +51,13 @@ socket.on('inputInvite', message => {
 
 socket.on('yourMessage', message => {
   outputMessage(message);
+  scroll();
+  clearMsg();
+});
+
+socket.on('yourMessageWithFile', ({message, file}) => {
+  console.log(file);
+  outputMessageWithFile(message, file);
   scroll();
   clearMsg();
 });
@@ -69,10 +81,10 @@ socket.on('alert', message => {
   alert(message);
 });
 
-function upload(caller) {
-  console.log(caller.files[0]);
-  console.log(URL.createObjectURL(event.target.files[0]));
-  readImage($(caller)).done(function(base64Data){
+function upload() {
+  const caller = document.getElementById('file')
+  //console.log(URL.createObjectURL(caller.files[0]));
+  readImage($(caller)).done(function (base64Data) {
     $('#preview').prop('src', base64Data);
     return base64Data;
   });
@@ -83,13 +95,13 @@ function readImage(inputElement) {
 
   let files = inputElement.get(0).files;
   if (files && files[0]) {
-      let fr = new FileReader();
-      fr.onload = function(e) {
-          deferred.resolve(e.target.result);
-      };
-      fr.readAsDataURL( files[0] );
+    let fr = new FileReader();
+    fr.onload = function (e) {
+      deferred.resolve(e.target.result);
+    };
+    fr.readAsDataURL(files[0]);
   } else {
-      deferred.resolve(undefined);
+    deferred.resolve(undefined);
   }
 
   return deferred.promise();
@@ -103,15 +115,26 @@ function changeFileCheckbox(caller) {
   }
 }
 
-function submitMessage(caller) {
+function submitMessage() {
   const message = messageBox.value;
 
-  if ($('#file-checkbox').prop('checked')) {
-    console.log(upload($('#file')))
-    socket.emit('chatMessage', upload(document.getElementById('file')));
-  }
+  console.log();
 
-  socket.emit('chatMessage', message);
+  if ($('#file-checkbox').prop('checked')) {
+    //most have been copied upload() because of a bug
+    const caller = document.getElementById('file')
+    //console.log(URL.createObjectURL(caller.files[0]));
+    readImage($(caller)).done(function (base64Data) {
+      $('#preview').prop('src', base64Data);
+      socket.emit('chatMessageWithFile', {
+        file: base64Data,
+        comment: message
+      }
+      );
+    });
+  } else {
+    socket.emit('chatMessageWithFile', message);
+  }
 
   return false;
 }
@@ -123,7 +146,21 @@ function outputMessage(message) {
   chatMessages.appendChild(div);
 }
 
+function outputMessageWithFile(message, file) {
+  let div = document.createElement('div');
+  div.classList.add('outgoing-message', 'conversation');
+  div.innerHTML = '<p class="meta">Me <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.comment) + '</p><img class="message-file" src="' + file + '" />';
+  chatMessages.appendChild(div);
+}
+
 function inputMessage(message) {
+  let div = document.createElement('div');
+  div.classList.add('incoming-message', 'conversation');
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
+  chatMessages.appendChild(div);
+}
+
+function inputMessageWithFile(message) {
   let div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
   div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
@@ -219,6 +256,10 @@ function sendPrivate(caller) {
 }
 
 function urlify(text) {
+  if (text == '' || text == undefined || text == null) {
+    text = '';
+  }
+
   let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
   let urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 

@@ -59,9 +59,9 @@
       <div class="chat-input">
         <input type="text" placeholder="Message" class="message" id="message" />
         <input type="checkbox" name="fileCheckbox" onchange="changeFileCheckbox(this)" autocomplete="off" id="file-checkbox" />
-        <input type="file" id="file" disabled="disabled" onchange="upload(this)" />
+        <input type="file" id="file" disabled="disabled" onchange="upload()" />
         <image id="preview"></image>
-        <button id="send" onclick="submitMessage(this)">Send</button>
+        <button id="send" onclick="submitMessage()">Send</button>
       </div>
     </article>
   </section>

@@ -81,6 +81,15 @@ io.on('connection', socket => {
     socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
   });
 
+  socket.on('chatMessageWithFile', message => {
+    const user = getCurrentUser(socket.id);
+
+    console.log(message.file);
+
+    socket.emit('yourMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
+    socket.broadcast.to(user.room).emit('inputMessageWithFile', formatMessage(user.username, message.file, message.comment));
+  });
+
   socket.on('sendPrivate', targetName => {
     const user = getCurrentUser(socket.id);
     const target = getCurrentUserByName(targetName);
