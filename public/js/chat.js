@@ -160,10 +160,10 @@ function inputMessage(message) {
   chatMessages.appendChild(div);
 }
 
-function inputMessageWithFile(message) {
+function inputMessageWithFile(message, file) {
   let div = document.createElement('div');
   div.classList.add('incoming-message', 'conversation');
-  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p>';
+  div.innerHTML = '<p class="meta">' + message.username + ' <span>' + message.time + '</span></p><p class="message-text">' + urlify(message.text) + '</p><img class="message-file" src="' + file + '" />';
   chatMessages.appendChild(div);
 }
 

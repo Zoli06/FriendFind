@@ -87,7 +87,7 @@ io.on('connection', socket => {
     console.log(message.file);
 
     socket.emit('yourMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
-    socket.broadcast.to(user.room).emit('inputMessageWithFile', formatMessage(user.username, message.file, message.comment));
+    socket.broadcast.to(user.room).emit('inputMessageWithFile', {message: formatMessage(user.username, message.comment), file: message.file});
   });
 
   socket.on('sendPrivate', targetName => {
