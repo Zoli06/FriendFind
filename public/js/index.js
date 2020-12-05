@@ -35,14 +35,14 @@ function outputRooms(rooms) {
 
 function radioChange(isItJoin, isPrivate) {
   if (isItJoin == true && isPrivate == false) {
-    $('#room-list').prop('required', true).prop('checked', true).prop('disabled', false);
-    $('#new-room, #createjoin-priv-room').prop('required', false).prop('disabled', true);
+    $('#room-list').prop('required', true).prop('checked', true).prop('disabled', false).show();
+    $('#new-room, #createjoin-priv-room').prop('required', false).prop('disabled', true).hide();
   } else if (isItJoin == false && isPrivate == false) {
-    $('#room-list, #createjoin-priv-room').prop('required', false).prop('disabled', false).prop('disabled', true);
-    $('#new-room').prop('required', true).prop('disabled', false);
+    $('#room-list, #createjoin-priv-room').prop('required', false).prop('disabled', true).hide();
+    $('#new-room').prop('required', true).prop('disabled', false).show();
   } else if (isItJoin == false && isPrivate == true) {
-    $('#room-list, #new-room').prop('required', false).prop('disabled', true).prop('disabled', true);
-    $('#createjoin-priv-room').prop('required', true).prop('disabled', false);
+    $('#room-list, #new-room').prop('required', false).prop('disabled', true).hide();
+    $('#createjoin-priv-room').prop('required', true).prop('disabled', false).show();
   }
 }
 

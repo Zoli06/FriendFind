@@ -1,14 +1,101 @@
 * {
   box-sizing: border-box;
   outline: none;
+  color: white;
 }
 
 :root {
   --header-height: 7.5vh;
-  --identity-color: darkslateblue
+  --identity-color: darkslateblue;
 }
 
-header {
+.index-body,
+.form {
+  height: 100vh;
+  width: 100vw;
+}
+
+.index-header {
+  position: absolute;
+  width: 100vw;
+  margin-top: 5vh;
+}
+
+.index-body {
+  background-image: url(../img/lsPiBU4.jpg);
+  background-size: cover;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  width: 30vw;
+  text-align: center;
+}
+
+input {
+  color: black;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="submit"] {
+  margin-top: 2rem;
+}
+
+input[type="radio"]:checked+label {
+  border-bottom: 5px solid white;
+}
+
+input[type="radio"]+label:hover, input[type="submit"] {
+  cursor: pointer;
+}
+
+label {
+  font-size: large;
+  font-weight: bold;
+}
+
+.method-select {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.form-labels, .form-inputs {
+  display: inline;
+}
+
+.form-labels *, .form-inputs * {
+  display: inline-block;
+  width: 40%;
+}
+
+.submit {
+  color: black;
+  display: block;
+  width: 100%;
+  height: 5vh;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #2396a3;
+  opacity: 0.85;
+  border: none
+}
+
+.chat-header {
   background-color: var(--identity-color);
   height: var(--header-height);
   padding: 0 5vw;
@@ -30,10 +117,11 @@ nav {
 }
 
 nav i {
-  margin-left: 2.5vw
+  margin-left: 2.5vw;
 }
 
-.list, .chat {
+.list,
+.chat {
   height: calc(100vh - var(--header-height));
 }
 
@@ -90,7 +178,7 @@ nav i {
   background-color: var(--identity-color);
   filter: brightness(200%);
   position: relative;
-  float: right; 
+  float: right;
   color: black;
   margin-right: 2.5vw;
 }
@@ -106,7 +194,7 @@ nav i {
 }
 
 h1 {
-  font-size: large;
+  font-size: 2.75rem;
   text-align: center;
   font-weight: bold;
 }
