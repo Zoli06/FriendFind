@@ -275,10 +275,17 @@ nav i {
   color: gray;
 }
 
-h1 {
-  font-size: 2.75rem;
+h1, h2 {
   text-align: center;
   font-weight: bold;
+}
+
+h1 {
+  font-size: 2.75rem;
+}
+
+h2 {
+  font-size: 1.75rem;
 }
 
 .button:hover {
