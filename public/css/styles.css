@@ -24,7 +24,6 @@
 .index-body {
   background-image: url(../img/lsPiBU4.jpg);
   background-size: cover;
-  text-align: center;
   height: 100vh;
   width: 100vw;
 }
@@ -40,7 +39,6 @@
   background-color: rgba(0, 0, 0, 0.6);
   padding: 2rem;
   width: 30vw;
-  text-align: center;
 }
 
 input {
@@ -68,19 +66,97 @@ label {
   font-weight: bold;
 }
 
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .method-select {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
 
-.form-labels, .form-inputs {
-  display: inline;
+@media screen and (max-width: 1680px) {
+  .box {
+    width: 40%;
+  }
 }
 
-.form-labels *, .form-inputs * {
-  display: inline-block;
-  width: 40%;
+@media screen and (max-width: 1280px) {
+  .box {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .box {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .box {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .box {
+    width: 100%;
+  }
+
+  .method-select label {
+    font-size: .9rem;
+  }
+
+  .form-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .method-select label {
+    font-size: .8rem;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .method-select label {
+    font-size: .7rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .method-select label {
+    font-size: .6rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .method-select label {
+    font-size: .45rem;
+  }
+}
+
+.room-div input, .room-div select, .username-div input {
+  width: 75%;
+  display: block;
+  flex: 1;
+}
+
+.room-div, .username-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .submit {

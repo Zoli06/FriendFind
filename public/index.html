@@ -26,24 +26,24 @@
       <div class="method-select">
         <input type="radio" name="method" value="join" id="join" required="required" checked="checked"
           autocomplete="off" onchange="radioChange(true, false)" />
-        <label for="join">Join a room</label>
+        <label for="join">Join to a room</label>
         <input type="radio" name="method" value="create" id="create" autocomplete="off"
           onchange="radioChange(false, false)" />
         <label for="create">Create a room</label>
         <input type="radio" name="method" value="createjoin-priv" id="createjoin-priv" autocomplete="off"
           onchange="radioChange(false, true)" />
-        <label for="createjoin-priv">Create/join a private room</label>
+        <label for="createjoin-priv">Create/join to private room</label>
       </div>
 
       <br />
 
       <div class="form-fields">
-        <div class="form-labels">
+        <div class="username-div">
           <label class="form-inputs-labels">Username:</label>
-          <label class="form-inputs-labels">Room:</label>
-        </div>
-        <div class="form-inputs">
           <input type="text" name="username" placeholder="Enter username..." required="required" />
+        </div>
+        <div class="room-div">
+          <label class="form-inputs-labels">Room:</label>
           <select name="room" id="room-list" required="required">
             <option selected="selected" disabled="disabled" label="default"></option>
           </select>
@@ -51,8 +51,8 @@
           <input type="text" name="room" placeholder="Enter room name..." id="createjoin-priv-room" />
         </div>
       </div>
-
       <input type="submit" class="submit" value="Join" />
+    </div>
     </div>
   </form>
 </body>
