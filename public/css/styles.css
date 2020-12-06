@@ -145,6 +145,12 @@ label {
   }
 }
 
+@media screen and (max-width: 250px) {
+  .method-select label {
+    font-size: .35rem;
+  }
+}
+
 .room-div input, .room-div select, .username-div input {
   width: 75%;
   display: block;
