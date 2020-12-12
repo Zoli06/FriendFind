@@ -29,6 +29,7 @@
 .chat-body {
   background-image: url(../img/lsPiBU4.jpg);
   background-size: cover;
+  background-position: center;
   height: 100vh;
   width: 100vw;
   font-family: 'Roboto', sans-serif;
@@ -197,6 +198,14 @@ nav i {
   width: 25%;
   background-color: rgb(15,15,19);
   border-right: 1px solid rgb(43,45,50);
+}
+
+.list h2, #user-list div {
+  margin-bottom: 1rem;
+}
+
+#user-list div li {
+  margin-left: 1vw;
 }
 
 .chat {
