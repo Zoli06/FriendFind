@@ -41,7 +41,6 @@ socket.on('inputMessage', message => {
 });
 
 socket.on('inputMessageWithFile', ({ message, file }) => {
-  console.log(file);
   inputMessageWithFile(message, file);
   scroll();
 });
@@ -58,7 +57,6 @@ socket.on('yourMessage', message => {
 });
 
 socket.on('yourMessageWithFile', ({ message, file }) => {
-  console.log(file);
   outputMessageWithFile(message, file);
   scroll();
   clearMsg();
@@ -75,9 +73,15 @@ socket.on('yourInvite', message => {
   clearMsg();
 });
 
-socket.on('redirect', function (destination) {
+socket.on('redirect', destination => {
   window.location.href = destination;
 });
+
+/*socket.on('disconnect', () => {
+  console.log('Reconnect');
+  socket.connect();
+  socket.emit('joinRoom', { username, room, isPrivate, method });
+})*/
 
 socket.on('alert', message => {
   alert(message);
