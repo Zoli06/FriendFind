@@ -285,3 +285,72 @@ function urlify(text) {
   // or alternatively
   // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
+
+function openMenu(open) {
+  if (open) {
+    $('.menu-open').css({
+      'display' : 'none'
+    }, 250);
+
+    $('.menu-open').animate({
+      'opacity': '0'
+    }, 250);
+
+    $('.menu-close').css({
+      'display' : 'block'
+    }, 250);
+
+    $('.menu-close').animate({
+      'opacity': '1',
+    }, 250);
+    
+    $('.chat').animate({
+      'width' : '75%'
+    }, 250);
+    
+    $('.list').animate({
+      'width' : '25%'
+    }, 250);
+    
+    $('#room-name').animate({
+      'position' : 'absolute',
+      'left' : '61vw'
+    }, 250);
+  } else {
+    $('.menu').animate({
+      'opacity': '1',
+      'position' : 'absolute',
+      'margin-top' : '2vmin',
+    }, 250);
+    
+    $('.menu-close').animate({
+      'opacity': '0',
+      'margin-left' : '2vmin'
+    }, 250);
+
+    $('.menu-close').css({
+      'display' : 'none'
+    }, 250);
+
+    $('.menu-open').animate({
+      'margin-left' : '5vw'
+    }, 250);
+
+    $('.menu-open').css({
+      'display' : 'block'
+    }, 250);
+    
+    $('.list').animate({
+      'width' : '0%'
+    });
+    
+    $('.chat').animate({
+      'width' : '100%'
+    });
+    
+    $('#room-name').animate({
+      'position' : 'absolute',
+      'left' : '45vw'
+    }, 250);
+  }
+}
