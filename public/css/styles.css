@@ -113,13 +113,15 @@ label {
   }
 
   .method-select label {
-    font-size: .9rem;
+    font-size: 2.75vw;
   }
 
   .form-fields {
     grid-template-columns: 1fr;
   }
 }
+
+/*
 
 @media screen and (max-width: 420px) {
   .method-select label {
@@ -149,7 +151,7 @@ label {
   .method-select label {
     font-size: .35rem;
   }
-}
+}*/
 
 .room-div input, .room-div select, .username-div input {
   width: 75%;
