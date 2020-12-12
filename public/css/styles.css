@@ -15,6 +15,27 @@
   width: 100vw;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .index-header {
   position: absolute;
   width: 100vw;
@@ -32,7 +53,7 @@
   background-position: center;
   height: 100vh;
   width: 100vw;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .form {
@@ -48,7 +69,8 @@
   width: 30vw;
 }
 
-input, select {
+input,
+select {
   color: black;
 }
 
@@ -60,12 +82,8 @@ input[type="submit"] {
   margin-top: 2rem;
 }
 
-input[type="radio"]:checked+label {
+input[type="radio"]:checked + label {
   border-bottom: 5px solid white;
-}
-
-input[type="radio"]+label:hover, input[type="submit"] {
-  cursor: pointer;
 }
 
 label {
@@ -128,13 +146,16 @@ label {
   }
 }
 
-.room-div input, .room-div select, .username-div input {
+.room-div input,
+.room-div select,
+.username-div input {
   width: 75%;
   display: block;
   flex: 1;
 }
 
-.room-div, .username-div {
+.room-div,
+.username-div {
   width: 100%;
   display: flex;
   align-items: center;
@@ -156,14 +177,14 @@ label {
   font-weight: bold;
   background-color: #2396a3;
   opacity: 0.85;
-  border: none
+  border: none;
 }
 
 .chat-header {
-  background-color: rgb(34,36,41);
+  background-color: rgb(34, 36, 41);
   height: var(--header-height);
   padding: 0 5vw;
-  border-bottom: 1px solid rgb(43,45,50);
+  border-bottom: 1px solid rgb(43, 45, 50);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -196,40 +217,103 @@ nav i {
 
 .list {
   width: 25%;
-  background-color: rgb(15,15,19);
-  border-right: 1px solid rgb(43,45,50);
+  background-color: rgb(15, 15, 19);
+  border-right: 1px solid rgb(43, 45, 50);
 }
 
-.list h2, #user-list div {
+.list h2,
+#user-list div {
   margin-bottom: 1rem;
 }
 
-#user-list div li {
-  margin-left: 1vw;
+#user-list div {
+  margin-left: 10px;
 }
 
 .chat {
   position: relative;
   float: right;
   margin-top: calc((100vh - var(--header-height)) * -1);
-  background-color: rgb(34,36,41);
+  background-color: rgb(34, 36, 41);
   width: 75%;
   padding-left: 2.5vw;
 }
 
 .chat-messages {
   overflow-y: auto;
-  max-height: 85%;
+  max-height: 78%;
+}
+
+.message {
+  resize: none;
+  position: relative;
+  height: 12.25vh;
+  width: 40vw;
+  margin-right: 1vmin;
+  margin-left: -14vmin;
+  background-color: rgb(15, 15, 19);
+  border: 3px solid rgb(63, 66, 70);
+  border-radius: 5px;
+  color: white;
+}
+
+.file-label,
+#reset-upload,
+#send {
+  color: black;
+}
+
+.file-label,
+#reset-upload,
+#send {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 5vmin;
+  width: 5vmin;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 3vmin;
+  border-radius: 50%;
+  border: 3px solid rgb(63, 66, 70);
+}
+
+.file-label:hover,
+#reset-upload:hover,
+#send:hover,
+.private:hover,
+.button:hover,
+input[type="radio"] + label:hover,
+input[type="submit"] {
+  cursor: pointer;
+}
+
+#reset-upload {
+  margin-left: 6vmin;
+}
+
+#send {
+  margin-left: 12vmin;
+}
+
+#file {
+  display: none;
 }
 
 .chat-input {
-  background-color: white;
+  background-color: rgb(51, 53, 57);
   position: absolute;
-  width: 100%;
-  height: 15%;
+  width: 95%;
+  height: 20%;
   bottom: 0px;
-  padding: 2vw;
-  margin-left: -2.5vw;
+  padding: 3vmin;
+  margin-left: calc(-2.5vw + 2.5%);
+  margin-bottom: calc(75vw / 100 * 2.5); /*2.5% of its width*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgb(63, 66, 70);
+  border-radius: 5px;
 }
 
 .conversation {
@@ -271,7 +355,8 @@ nav i {
   color: gray;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: bold;
 }
 
@@ -281,21 +366,13 @@ h1 {
 
 h2 {
   font-size: 1.25rem;
-  color: rgb(113,115,119);
+  color: rgb(113, 115, 119);
   text-transform: uppercase;
-}
-
-.button:hover {
-  cursor: pointer;
 }
 
 .user {
   display: inline-block;
   margin-right: 1.5vw;
-}
-
-.private:hover {
-  cursor: pointer;
 }
 
 .message-text {
@@ -312,5 +389,11 @@ h2 {
 
 #preview {
   max-width: 50%;
-  max-height: 80%;
+  max-height: 35%;
+  position: absolute;
+  bottom: 3vmin;
+}
+
+.message-file {
+  max-width: 100%;
 }

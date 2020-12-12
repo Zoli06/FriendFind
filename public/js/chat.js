@@ -85,7 +85,7 @@ socket.on('alert', message => {
 
 function upload() {
   const caller = document.getElementById('file')
-  //console.log(URL.createObjectURL(caller.files[0]));
+  console.log('asd');
   readImage($(caller)).done(function (base64Data) {
     if (base64Data == undefined) {
       $('#preview').prop('src', '')
@@ -141,11 +141,11 @@ function resetUpload() {
   let fileHtmlObj = document.getElementById('file');
   let tempFileHtmlObj = document.createElement('input');
 
-  $(tempFileHtmlObj).prop('type', 'file').prop('id', 'file').prop('accept', 'image/*');
+  $(tempFileHtmlObj).prop('type', 'file').prop('id', 'file').prop('accept', 'image/*').prop('name', 'file');
   fileHtmlObj.remove();
   $('#preview').prop('src', '');
-  document.getElementById('message').after(tempFileHtmlObj);
-  $(document.getElementById('file')).change(upload());
+  document.getElementById('message').after(tempFileHtmlObj)
+  document.getElementById('file').setAttribute('onchange', 'upload()');
 }
 
 function outputMessage(message) {
