@@ -2,6 +2,12 @@
 
 if (window.location.href.includes('method=createjoin-priv') && !window.location.href.includes('room=priv-')) window.location.href = window.location.href.replace('room=', 'room=priv-')
 
+let isPrivate = false;
+
+let { username, method, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+
 let messageBox,
   chatMessages,
   roomName,
@@ -11,12 +17,7 @@ $(document).ready(function () {
   chatMessages = document.getElementById('chat-messages');
   roomName = document.getElementById('room-name');
   userList = document.getElementById('user-list');
-});
-
-let isPrivate = false;
-
-let { username, method, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true
+  document.getElementById('name').innerText = username;
 });
 
 if (method == 'createjoin-priv') {
@@ -40,6 +41,7 @@ socket.on('inputMessage', message => {
 });
 
 socket.on('inputMessageWithFile', ({ message, file }) => {
+  console.log(file);
   inputMessageWithFile(message, file);
   scroll();
 });
@@ -143,7 +145,7 @@ function resetUpload() {
   fileHtmlObj.remove();
   $('#preview').prop('src', '');
   document.getElementById('message').after(tempFileHtmlObj);
-  $(document.getElementById('file')).change(upload);
+  $(document.getElementById('file')).change(upload());
 }
 
 function outputMessage(message) {

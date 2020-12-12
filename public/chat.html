@@ -9,6 +9,8 @@
     crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/jquery/jquery-3.5.1.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   <script src="js/chat.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -17,23 +19,19 @@
   <title>FriendFind</title>
 </head>
 
-<body>
+<body class="chat-body">
   <header class="chat-header">
     <div class="logo">
       <i class="far fa-comments button"></i>
     </div>
+    <h1 id="room-name"></h1>
     <nav>
-      <i class="far fa-comments button"></i>
-      <i class="fas fa-globe button"></i>
-      <i class="fas fa-plus button"></i>
+      <p id="name"></p>
       <i class="fas fa-sign-out-alt button last" onclick="window.location.href = '/'"></i>
     </nav>
   </header>
   <section>
     <article class="list">
-      <h2>Room: </h1>
-      <h2 id="room-name"></h1>
-      <br />
       <h2>Users</h1>
       <ul id="user-list">
       </ul>

@@ -83,7 +83,6 @@ io.on('connection', socket => {
 
   socket.on('chatMessageWithFile', message => {
     const user = getCurrentUser(socket.id);
-    console.log(message.file.slice(0, 11) == 'data:image/');
     if (message.file.slice(0, 11) != 'data:image/') {
       socket.emit('alert', 'Unsupported file format! We only accept images.');
     } else {

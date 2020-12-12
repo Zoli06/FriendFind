@@ -21,11 +21,17 @@
   margin-top: 5vh;
 }
 
-.index-body {
+.index-header h1 {
+  text-align: center;
+}
+
+.index-body,
+.chat-body {
   background-image: url(../img/lsPiBU4.jpg);
   background-size: cover;
   height: 100vh;
   width: 100vw;
+  font-family: 'Roboto', sans-serif;
 }
 
 .form {
@@ -121,38 +127,6 @@ label {
   }
 }
 
-/*
-
-@media screen and (max-width: 420px) {
-  .method-select label {
-    font-size: .8rem;
-  }
-}
-
-@media screen and (max-width: 380px) {
-  .method-select label {
-    font-size: .7rem;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .method-select label {
-    font-size: .6rem;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  .method-select label {
-    font-size: .45rem;
-  }
-}
-
-@media screen and (max-width: 250px) {
-  .method-select label {
-    font-size: .35rem;
-  }
-}*/
-
 .room-div input, .room-div select, .username-div input {
   width: 75%;
   display: block;
@@ -165,6 +139,11 @@ label {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+#room-name {
+  position: absolute;
+  left: 61.5vw;
 }
 
 .submit {
@@ -180,9 +159,13 @@ label {
 }
 
 .chat-header {
-  background-color: var(--identity-color);
+  background-color: rgb(34,36,41);
   height: var(--header-height);
   padding: 0 5vw;
+  border-bottom: 1px solid rgb(43,45,50);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -207,19 +190,21 @@ nav i {
 .list,
 .chat {
   height: calc(100vh - var(--header-height));
+  padding: 2vmin;
 }
 
 .list {
-  width: 30%;
-  background-color: lightgreen;
+  width: 25%;
+  background-color: rgb(15,15,19);
+  border-right: 1px solid rgb(43,45,50);
 }
 
 .chat {
   position: relative;
   float: right;
   margin-top: calc((100vh - var(--header-height)) * -1);
-  width: 70%;
-  background-color: lightblue;
+  background-color: rgb(34,36,41);
+  width: 75%;
   padding-left: 2.5vw;
 }
 
@@ -278,7 +263,6 @@ nav i {
 }
 
 h1, h2 {
-  text-align: center;
   font-weight: bold;
 }
 
@@ -287,7 +271,9 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: 1.25rem;
+  color: rgb(113,115,119);
+  text-transform: uppercase;
 }
 
 .button:hover {
