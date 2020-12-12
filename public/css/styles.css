@@ -241,7 +241,7 @@ nav i {
 
 .chat-messages {
   overflow-y: auto;
-  max-height: 78%;
+  max-height: 75%;
 }
 
 .message {
@@ -334,6 +334,14 @@ input[type="submit"] {
 .incoming-message {
   background-color: white;
   float: left;
+}
+
+.incoming-message .message-text, .incoming-message .meta {
+  color: black;
+}
+
+.incoming-message .meta {
+  font-weight: bold;
 }
 
 .outgoing-message {

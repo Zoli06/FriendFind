@@ -85,7 +85,6 @@ socket.on('alert', message => {
 
 function upload() {
   const caller = document.getElementById('file')
-  console.log('asd');
   readImage($(caller)).done(function (base64Data) {
     if (base64Data == undefined) {
       $('#preview').prop('src', '')
