@@ -29,6 +29,8 @@ io.on('connection', socket => {
   io.emit('rooms', getRooms(getAllUsers()));
 
   socket.on('joinRoom', ({ username, room, isPrivate, method }) => {
+    console.log('joinRoom', username, room, isPrivate, method);
+
     //Validate
     if ((room.slice(0, 5) != 'priv-' && isPrivate) || (room.slice(0, 5) == 'priv-' && !isPrivate) || username == '' || room == '' || (isPrivate != false && isPrivate != true) || method == '') {
       socket.emit('redirect', '/?alert=Error! Wait a bit, reload and then try again');
@@ -60,6 +62,7 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
+    console.log('disconnent');
     const user = userLeave(socket.id);
 
     if (user) {
@@ -75,6 +78,7 @@ io.on('connection', socket => {
   });
 
   socket.on('chatMessage', message => {
+    console.log('chatMessage', message);
     const user = getCurrentUser(socket.id);
 
     socket.emit('yourMessage', formatMessage(user.username, message));
@@ -82,6 +86,7 @@ io.on('connection', socket => {
   });
 
   socket.on('chatMessageWithFile', message => {
+    console.log('chatMessageWithFile', message.comment);
     const user = getCurrentUser(socket.id);
     if (message.file.slice(0, 11) != 'data:image/') {
       socket.emit('alert', 'Unsupported file format! We only accept images.');
@@ -92,6 +97,7 @@ io.on('connection', socket => {
   });
 
   socket.on('sendPrivate', targetName => {
+    console.log('chatMessageWithFile', targetName);
     const user = getCurrentUser(socket.id);
     const target = getCurrentUserByName(targetName);
     const url = 'http://localhost:4000/chat.html?method=createjoin-priv&room=priv-' + generateRandomRoom();
