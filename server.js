@@ -65,34 +65,50 @@ io.on('connection', socket => {
     console.log('disconnent');
     const user = userLeave(socket.id);
 
-    if (user) {
-      socket.broadcast.to(user.room).emit('globalMessage', user.username + ' has disconnected!');
+    if (user == undefined) {
+      console.log('Undefined user: ' + user);
+      socket.emit('alert', 'Message didn\'t send due to error. Try to reload the page.');
+    } else {
+      if (user) {
+        socket.broadcast.to(user.room).emit('globalMessage', user.username + ' has disconnected!');
 
-      io.to(user.room).emit('roomUsers', {
-        room: user.room,
-        users: getRoomUsers(user.room)
-      });
+        io.to(user.room).emit('roomUsers', {
+          room: user.room,
+          users: getRoomUsers(user.room)
+        });
+      }
+
+      io.emit('rooms', getRooms(getAllUsers()));
     }
-
-    io.emit('rooms', getRooms(getAllUsers()));
   });
 
   socket.on('chatMessage', message => {
     console.log('chatMessage', message);
     const user = getCurrentUser(socket.id);
 
-    socket.emit('yourMessage', formatMessage(user.username, message));
-    socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
+    if (user == undefined) {
+      console.log('Undefined user: ' + user);
+      socket.emit('alert', 'Message didn\'t send due to error. Try to reload the page.');
+    } else {
+      socket.emit('yourMessage', formatMessage(user.username, message));
+      socket.broadcast.to(user.room).emit('inputMessage', formatMessage(user.username, message));
+    }
   });
 
   socket.on('chatMessageWithFile', message => {
     console.log('chatMessageWithFile', message.comment);
     const user = getCurrentUser(socket.id);
-    if (message.file.slice(0, 11) != 'data:image/') {
-      socket.emit('alert', 'Unsupported file format! We only accept images.');
+
+    if (user == undefined) {
+      console.log('Undefined user: ' + user);
+      socket.emit('alert', 'Message didn\'t send due to error. Try to reload the page.');
     } else {
-      socket.emit('yourMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
-      socket.broadcast.to(user.room).emit('inputMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
+      if (message.file.slice(0, 11) != 'data:image/') {
+        socket.emit('alert', 'Unsupported file format! We only accept images.');
+      } else {
+        socket.emit('yourMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
+        socket.broadcast.to(user.room).emit('inputMessageWithFile', { message: formatMessage(user.username, message.comment), file: message.file });
+      }
     }
   });
 
@@ -102,11 +118,16 @@ io.on('connection', socket => {
     const target = getCurrentUserByName(targetName);
     const url = 'http://localhost:4000/chat.html?method=createjoin-priv&room=priv-' + generateRandomRoom();
 
-    if (target.id == user.id) {
-      socket.emit('alert', 'You can\'t invite yourself!');
+    if (user == undefined) {
+      console.log('Undefined user: ' + user);
+      socket.emit('alert', 'Message didn\'t send due to error. Try to reload the page.');
     } else {
-      socket.emit('yourInvite', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', url));
-      io.to(target.id).emit('inputInvite', formatMessage(user.username, user.username + ' invited you to a private room.', url));
+      if (target.id == user.id) {
+        socket.emit('alert', 'You can\'t invite yourself!');
+      } else {
+        socket.emit('yourInvite', formatMessage(user.username, 'You invited ' + target.username + ' to a private chat room.', url));
+        io.to(target.id).emit('inputInvite', formatMessage(user.username, user.username + ' invited you to a private room.', url));
+      }
     }
   })
 

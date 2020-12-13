@@ -6,7 +6,12 @@
 
 :root {
   --header-height: 7.5vh;
-  --identity-color: darkslateblue;
+  --blue: #2396a3;
+  --darkblue: #1a707a;
+  --lightcolor: rgb(63, 66, 70);
+  --lightercolor: rgb(51,53,57);
+  --mediumcolor: rgb(34,36,41);
+  --darkcolor: rgb(15,15,19);
 }
 
 .index-body,
@@ -142,8 +147,7 @@ label {
   }
 
   #room-name {
-    position: absolute !important;
-    left: 61vw !important;
+    padding-left: 25% !important;
   }
 }
 
@@ -180,13 +184,12 @@ label {
     width: 100%;
   }
 
-  #room-name {
-    position: absolute;
-    left: 45vw;
-  }
-
   .chat-input div {
     margin-left: -25vw;
+  }
+
+  #room-name {
+    padding-left: 0%;
   }
 }
 
@@ -224,13 +227,18 @@ label {
   height: 5vh;
   font-size: 3vh;
   font-weight: bold;
-  background-color: #2396a3;
+  background-color: var(--blue);
   opacity: 0.85;
   border: none;
 }
 
+.submit:hover {
+  background-color: var(--darkblue);
+  opacity: 1;
+}
+
 .chat-header {
-  background-color: rgb(34, 36, 41);
+  background-color: var(--mediumcolor);
   height: var(--header-height);
   padding: 0 5vw;
   border-bottom: 1px solid rgb(43, 45, 50);
@@ -265,8 +273,8 @@ nav i {
 }
 
 .list {
-  background-color: rgb(15, 15, 19);
-  border-right: 1px solid rgb(43, 45, 50);
+  background-color: var(--darkcolor);
+  border-right: 1px solid rgb(43,45,50);
 }
 
 .list h2,
@@ -282,7 +290,7 @@ nav i {
   position: relative;
   float: right;
   margin-top: calc((100vh - var(--header-height)) * -1);
-  background-color: rgb(34, 36, 41);
+  background-color: var(--mediumcolor);
   padding-left: 2.5vw;
 }
 
@@ -298,8 +306,8 @@ nav i {
   width: 40vw;
   margin-right: 1vmin;
   margin-left: -14vmin;
-  background-color: rgb(15, 15, 19);
-  border: 3px solid rgb(63, 66, 70);
+  background-color: var(--darkcolor);
+  border: 3px solid var(--lightcolor);
   border-radius: 5px;
   color: white;
 }
@@ -322,7 +330,7 @@ nav i {
   position: absolute;
   top: 3vh;
   border-radius: 50%;
-  border: 3px solid rgb(63, 66, 70);
+  border: 3px solid var(--lightcolor);
 }
 
 .file-label,
@@ -334,6 +342,16 @@ nav i {
 input[type="radio"] + label:hover,
 input[type="submit"] {
   cursor: pointer;
+}
+
+.file-label:hover,
+#reset-upload:hover,
+#send:hover {
+  background-color: var(--lightcolor);
+}
+
+.button, .logo {
+  z-index: 1;
 }
 
 #reset-upload {
@@ -349,7 +367,7 @@ input[type="submit"] {
 }
 
 .chat-input {
-  background-color: rgb(51, 53, 57);
+  background-color: var(--lightercolor);
   position: absolute;
   width: 95%;
   height: 20%;
@@ -360,7 +378,7 @@ input[type="submit"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid rgb(63, 66, 70);
+  border: 3px solid var(--lightcolor);
   border-radius: 5px;
 }
 
@@ -393,7 +411,7 @@ input[type="submit"] {
 }
 
 .outgoing-message {
-  background-color: var(--identity-color);
+  background-color: var(--blue);
   filter: brightness(200%);
   position: relative;
   float: right;
@@ -452,4 +470,11 @@ h2 {
 
 .message-file {
   max-width: 100%;
+}
+
+#room-name {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
 }
