@@ -9,9 +9,9 @@
   --blue: #2396a3;
   --darkblue: #1a707a;
   --lightcolor: rgb(63, 66, 70);
-  --lightercolor: rgb(51,53,57);
-  --mediumcolor: rgb(34,36,41);
-  --darkcolor: rgb(15,15,19);
+  --lightercolor: rgb(51, 53, 57);
+  --mediumcolor: rgb(34, 36, 41);
+  --darkcolor: rgb(15, 15, 19);
 }
 
 .index-body,
@@ -29,7 +29,7 @@
   background: #f1f1f1;
   border-radius: 5px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
@@ -107,29 +107,41 @@ label {
   margin-bottom: 1rem;
 }
 
+.method-select label {
+  font-size: 1.7vmin;
+}
 
+@media screen and (max-width: 1780px) {
+  .box {
+    width: 35%;
+  }
+}
 
 @media screen and (max-width: 1680px) {
   .box {
-    width: 40%;
+    width: 45%;
   }
 }
 
 @media screen and (max-width: 1280px) {
   .box {
-    width: 50%;
+    width: 55%;
   }
 }
 
 @media screen and (max-width: 1020px) {
   .box {
-    width: 60%;
+    width: 65%;
+  }
+
+  .method-select label {
+    font-size: 2vw;
   }
 }
 
 @media screen and (max-width: 850px) {
   .box {
-    width: 70%;
+    width: 75%;
   }
 }
 
@@ -177,7 +189,7 @@ label {
   }
 
   .list {
-    width: 0% ;
+    width: 0%;
   }
 
   .chat {
@@ -191,11 +203,15 @@ label {
   #room-name {
     padding-left: 0%;
   }
+
+  .method-select label {
+    font-size: 3vw;
+  }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 560px) {
   .method-select label {
-    font-size: 2.8vw;
+    font-size: 3.1vw;
   }
 
   .form-fields {
@@ -274,7 +290,7 @@ nav i {
 
 .list {
   background-color: var(--darkcolor);
-  border-right: 1px solid rgb(43,45,50);
+  border-right: 1px solid rgb(43, 45, 50);
 }
 
 .list h2,
@@ -350,7 +366,8 @@ input[type="submit"] {
   background-color: var(--lightcolor);
 }
 
-.button, .logo {
+.button,
+.logo {
   z-index: 1;
 }
 
@@ -402,7 +419,8 @@ input[type="submit"] {
   float: left;
 }
 
-.incoming-message .message-text, .incoming-message .meta {
+.incoming-message .message-text,
+.incoming-message .meta {
   color: black;
 }
 
