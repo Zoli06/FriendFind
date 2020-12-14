@@ -45,20 +45,37 @@
   position: absolute;
   width: 100vw;
   margin-top: 5vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .index-header h1 {
   text-align: center;
+  font-size: 4.5vw;
+  height: 3.9vw;
+}
+
+.index-logo {
+  height: 5vw;
 }
 
 .index-body,
 .chat-body {
-  background-image: url(../img/lsPiBU4.jpg);
   background-size: cover;
   background-position: center;
   height: 100vh;
   width: 100vw;
   font-family: "Roboto", sans-serif;
+}
+
+.index-body {
+  background-image: url(../img/lsPiBU4.jpg);
+}
+
+.chat-body {
+  background-color: var(--mediumcolor);
+  background-size: cover;
 }
 
 .form {
@@ -169,6 +186,10 @@ label {
   #room-name {
     padding-left: 25% !important;
   }
+
+  .chat-logo.small {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -214,6 +235,10 @@ label {
 
   .method-select label {
     font-size: 3vw;
+  }
+
+  .chat-logo.big {
+    display: none;
   }
 }
 
@@ -271,11 +296,19 @@ label {
   align-items: center;
 }
 
-.logo {
-  height: 100%;
+.chat-logo {
+  width: 15vmin;
   display: inline-flex;
   justify-content: left;
   align-items: center;
+}
+
+.chat-logo.small {
+  width: 3vmin;
+}
+
+.chat-logo.big {
+  width: 15vmin;
 }
 
 nav {
@@ -375,7 +408,7 @@ input[type="submit"] {
 }
 
 .button,
-.logo {
+.chat-logo {
   z-index: 1;
 }
 
@@ -503,4 +536,5 @@ h2 {
   width: 100%;
   left: 0;
   text-align: center;
+  font-size: 5vmin;
 }
