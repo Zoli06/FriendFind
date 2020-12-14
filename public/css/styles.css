@@ -108,12 +108,16 @@ label {
 }
 
 .method-select label {
-  font-size: 1.7vmin;
+  font-size: .9vw;
 }
 
 @media screen and (max-width: 1780px) {
   .box {
     width: 35%;
+  }
+
+  .method-select label {
+    font-size: 1.4vw;
   }
 }
 
@@ -126,6 +130,10 @@ label {
 @media screen and (max-width: 1280px) {
   .box {
     width: 55%;
+  }
+
+  .method-select label {
+    font-size: 1.5vw;
   }
 }
 
